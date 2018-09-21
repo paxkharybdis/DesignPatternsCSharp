@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 using Singleton;
 using AbstractFactory;
 using Builder;
+using Adapter;
+using Decorator;
+using Facade;
 
 namespace DesignPatternsClass
 {
@@ -15,7 +18,10 @@ namespace DesignPatternsClass
         {
             // SingletonPatternDemo();
             // AbstractFactoryPatternDemo();
-            BuilderPatternDemo();
+            // BuilderPatternDemo();
+            // AdapterPatternDemo();
+            // DecoratorPatternDemo();
+            FacadePatternDemo();
         }
 
 
@@ -59,5 +65,45 @@ namespace DesignPatternsClass
             IBicycle bicycle = director.Build(builder);
             Console.WriteLine(bicycle);
         }
+
+        private static void AdapterPatternDemo()
+        {
+            IList<IWheel> wheels = new List<IWheel>();
+            wheels.Add(new NarrowWheel(24));
+            wheels.Add(new NarrowWheel(20));
+            wheels.Add(new WideWheel(24));
+
+
+            UltraWheel ultraWheel = new UltraWheel(22);
+            wheels.Add(new UltraWheelAdapter(ultraWheel));
+
+            foreach (IWheel wheel in wheels)
+            {
+                Console.WriteLine(wheel);
+
+            }
+        }
+
+        private static void DecoratorPatternDemo()
+        {
+            IBicycle myTourBike = new Touring(new NarrowWheel(24), BikeColor.Blue);
+            Console.WriteLine("myTourBike");
+
+            myTourBike = new GoldFrameBike(myTourBike);
+            Console.WriteLine("myTourBike");
+
+            myTourBike = new CustomGripBike(myTourBike);
+            Console.WriteLine("myTourBike");
+
+
+        }
+
+        private static void FacadePatternDemo()
+        {
+            BikeFacade facade = new BikeFacade();
+            facade.PrepareForSale(new Downhill(new WideWheel(20), BikeColor.Red));
+        }
+    
     }
+
 }

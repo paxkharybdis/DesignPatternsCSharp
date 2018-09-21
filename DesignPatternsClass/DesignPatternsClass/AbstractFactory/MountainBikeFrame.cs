@@ -10,7 +10,7 @@ namespace AbstractFactory
     {
         public virtual string BikeFrameParts
         {
-            get { return "Frame parts for Mountain Bike"}
+            get { return "Frame parts for Mountain Bike"; }
         }
     }
 }

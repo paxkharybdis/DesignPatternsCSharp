@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DesignPatternsClass
 {
-    class AbstractWheel : IWheel
+    public class AbstractWheel : IWheel
     {
         private int _size;
         private bool _wide;
