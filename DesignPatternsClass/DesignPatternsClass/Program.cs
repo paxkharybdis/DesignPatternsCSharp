@@ -9,6 +9,10 @@ using Builder;
 using Adapter;
 using Decorator;
 using Facade;
+using System.Collections;
+using Iterator;
+using Observer;
+using Visitor;
 
 namespace DesignPatternsClass
 {
@@ -21,9 +25,71 @@ namespace DesignPatternsClass
             // BuilderPatternDemo();
             // AdapterPatternDemo();
             // DecoratorPatternDemo();
-            FacadePatternDemo();
+            // FacadePatternDemo();
+            // IteratorPatternDemo();
+            // IteratorPatternDemo2();
+            // ObserverPatternDemo();
+            VisitorPatternDemo();
+
         }
 
+        private static void VisitorPatternDemo()
+        {
+            IWheel wheel = new WideWheel(24);
+            wheel.AcceptVisitor(new WheelDiagnostics());
+            wheel.AcceptVisitor(new WheelInventory());
+        }
+
+
+        private static void ObserverPatternDemo()
+        {
+            Speedometer mySpeedometer = new Speedometer();
+            SpeedMonitor monitor = new SpeedMonitor(mySpeedometer);  // Observer
+            Gearbox auto = new Gearbox(mySpeedometer);  // Observer
+
+            mySpeedometer.CurrentSpeed = 10;
+            mySpeedometer.CurrentSpeed = 20;
+            mySpeedometer.CurrentSpeed = 25;
+            mySpeedometer.CurrentSpeed = 30;
+            mySpeedometer.CurrentSpeed = 40;
+        }
+
+        private static void IteratorPatternDemo2()
+        {
+            Console.WriteLine("--- Road Bikes ---");
+            RoadBikeRange roadRange = new RoadBikeRange();
+            foreach (IBicycle bicycle in roadRange.Range)
+            {
+                Console.WriteLine(bicycle);
+            }
+
+            Console.WriteLine("=== Mountain Bikes ===");
+            MountainBikeRange mountainRange = new MountainBikeRange();
+            foreach (IBicycle bicycle in mountainRange.Range)
+            {
+                Console.WriteLine(bicycle);
+            }
+
+        }
+
+        private static void IteratorPatternDemo()
+        {
+            Console.WriteLine("--- Road Bikes ---");
+            RoadBikeRange roadRange = new RoadBikeRange();
+            PrintIterator(roadRange.GetEnumerator());
+
+            Console.WriteLine("=== Mountain Bikes ===");
+            MountainBikeRange mountainRange = new MountainBikeRange();
+            PrintIterator(mountainRange.GetEnumerator());
+        }
+
+        private static void PrintIterator(IEnumerator iter)
+        {
+            while (iter.MoveNext())
+            {
+                Console.WriteLine(iter.Current);
+            }
+        }
 
         private static void SingletonPatternDemo()
         {
@@ -49,7 +115,7 @@ namespace DesignPatternsClass
             {
                 factory = new MountainBikeFactory();
             }
-       
+
             IBikeFrame bikeFrame = factory.CreateBikeFrame();
             IBikeSeat bikeSeat = factory.CreateBikeSeat();
 
@@ -103,7 +169,7 @@ namespace DesignPatternsClass
             BikeFacade facade = new BikeFacade();
             facade.PrepareForSale(new Downhill(new WideWheel(20), BikeColor.Red));
         }
-    
+
     }
 
 }

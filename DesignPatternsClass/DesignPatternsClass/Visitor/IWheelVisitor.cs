@@ -4,14 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DesignPatternsClass;
-using Visitor;
 
-namespace DesignPatternsClass
+namespace Visitor
 {
-    public interface IWheel : IVisitAble
+    public interface IWheelVisitor
     {
-        int Size { get; }
-        bool Wide { get; }
-
+        void Visit(IWheel wheel);
+        void Visit(Spokes spokes);
+        void Visit(Bearings bearings);
     }
 }
